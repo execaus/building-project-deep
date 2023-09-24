@@ -1,10 +1,11 @@
 import {Box, Card, CardBody, CardHeader, Grid, Heading, Stack, StackDivider, Text} from "@chakra-ui/react";
 import React from "react";
 import MapOnObject from "./MapOnObject";
+import Contractors from "./Contractors";
 
-const InformaitonObject = () => {
+const InformationObject = () => {
 	return (
-		<Grid templateColumns='repeat(3, 1fr)' gap="1">
+		<Grid templateColumns='repeat(3, 1fr)' gap="2">
 			<Card marginTop={10}>
 				<CardHeader>
 					<Heading size='xs'>Информация об объекте</Heading>
@@ -38,9 +39,10 @@ const InformaitonObject = () => {
 					</Stack>
 				</CardBody>
 			</Card>
+			<Contractors/>
 			<MapOnObject/>
 		</Grid>
 	);
 }
 
-export default InformaitonObject;
+export default InformationObject;
