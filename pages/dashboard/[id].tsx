@@ -32,7 +32,7 @@ function Content() {
 
     return (
         <HStack h={'100vh'}>
-            <NavBar/>
+            <NavBar projectID={id as string}/>
             <Grid
                 h={'100vh'}
                 templateAreas={`"nav main"`}
