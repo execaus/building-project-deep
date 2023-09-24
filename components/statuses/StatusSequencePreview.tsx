@@ -7,7 +7,7 @@ export interface StatusSequencePreviewProps {
 
 const StatusSequencePreview = (props: StatusSequencePreviewProps) => {
 	return (
-		<Button p={3} marginBottom={2}>
+		<Button p={3} marginBottom={2} width={200}>
 			{ props.name }
 		</Button>
 	);

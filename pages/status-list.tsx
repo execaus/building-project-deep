@@ -1,17 +1,17 @@
 import React from 'react';
 import { Page } from '../components/page';
-import { Heading, HStack, VStack } from '@chakra-ui/react';
+import { Grid, Heading, HStack, VStack } from '@chakra-ui/react';
 import StatusList from '../components/statuses/StatusList';
 import StatusSequenceList from '../components/statuses/StatusSequenceList';
 
 function Content() {
 	return (
-		<VStack spacing={8}>
+		<VStack p={10}>
 			<Heading>Статусы</Heading>
-			<HStack>
+			<Grid templateColumns={"3fr 7fr"} gap={4} width={"100%"} p={6}>
 				<StatusList />
 				<StatusSequenceList />
-			</HStack>
+			</Grid>
 		</VStack>
 	);
 }

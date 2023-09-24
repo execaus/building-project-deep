@@ -36,10 +36,10 @@ const StatusList = () => {
 
 	return (
 		<>
-			<Card p={"3"}>
+			<Card p={"3"} >
 				<HStack>
 					<Heading as='h4' size='md'>Статусы</Heading>
-					<Button colorScheme="green" onClick={onOpen}>
+					<Button colorScheme="green" onClick={onOpen} marginLeft={"auto"}>
 						<Add/>
 					</Button>
 				</HStack>
