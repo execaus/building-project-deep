@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import {
+	Box,
 	Button, Card,
 	Heading,
 	HStack, Input,
@@ -12,19 +13,25 @@ import {
 	useDisclosure
 } from '@chakra-ui/react';
 import { Add } from '@mui/icons-material';
-import { useDeep } from '@deep-foundation/deeplinks/imports/client';
+import { useDeep, useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
+import Status from './Status';
 
 const StatusList = () => {
 	const deep = useDeep();
+	const { data: statusTypeLinkID } = useDeepId("@l4legenda/status-pipeline", "Status")
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const [createStatusName, setCreateStatusName] = useState('')
 	const handleChange = (event) => setCreateStatusName(event.target.value)
 
+	const { data: statuses } = useDeepSubscription({
+			type_id: {
+				_eq: statusTypeLinkID,
+			}
+		})
+
 	const onCreateStatus = async () => {
 		onClose();
-
-		console.log(await deep.select(1))
 
 		const statusTypeLinkId = await deep.id("@l4legenda/status-pipeline", "Status")
 
@@ -43,6 +50,11 @@ const StatusList = () => {
 						<Add/>
 					</Button>
 				</HStack>
+				{
+					statuses.map((status, index) => <Box marginTop={2}>
+						<Status name={status.value?.value} key={index}></Status>
+					</Box>)
+				}
 			</Card>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
