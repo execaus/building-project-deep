@@ -2,6 +2,8 @@ import { Box, Button, Card, Grid, Heading, HStack, Image, Text } from '@chakra-u
 import React, { useState } from 'react';
 import { Page } from '../components/page';
 import { useRouter } from 'next/navigation';
+import { NavBar } from '../components/navbar';
+import Passport from '../components/passport/Passport';
 
 function Content() {
 	const router = useRouter()
@@ -49,24 +51,27 @@ function Content() {
 	])
 
 	return (
-		<Box p={10} w={"100%"}>
-			<HStack paddingBottom={4}>
-				<Heading>Проекты</Heading>
-				<Button marginLeft={"auto"} colorScheme={"green"}>Создать проект</Button>
-			</HStack>
-			<Grid gap={8} templateColumns={"repeat(6, 1fr)"}>
-				{
-					projects.map(project => <Card style={{
-						cursor: "pointer",
-					}} p={4} onClick={() => {
-						router.push("/passport")
-					}}>
-						<Image src={project.image} w={300} />
-						<Text paddingTop={3} fontSize='xl'>{ project.name }</Text>
-					</Card>)
-				}
-			</Grid>
-		</Box>
+		<HStack>
+			<NavBar />
+			<Box p={10} w={"100%"} h={"100vh"}>
+				<HStack paddingBottom={4}>
+					<Heading>Проекты</Heading>
+					<Button marginLeft={"auto"} colorScheme={"green"}>Создать проект</Button>
+				</HStack>
+				<Grid gap={8} templateColumns={"repeat(6, 1fr)"}>
+					{
+						projects.map(project => <Card style={{
+							cursor: "pointer",
+						}} p={4} onClick={() => {
+							router.push("/passport")
+						}}>
+							<Image src={project.image} w={300} />
+							<Text paddingTop={3} fontSize='xl'>{ project.name }</Text>
+						</Card>)
+					}
+				</Grid>
+			</Box>
+		</HStack>
 	);
 }
 

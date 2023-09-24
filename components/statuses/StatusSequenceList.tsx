@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Button, Card, Flex, HStack, Heading, Stack, VStack, useDisclosure } from '@chakra-ui/react';
-import StatusSequencePreview, { StatusSequencePreviewProps } from './StatusSequencePreview';
+import { Button, Card, Flex, Heading, HStack } from '@chakra-ui/react';
+import StatusSequencePreview from './StatusSequencePreview';
 import { Add } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import { useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
@@ -14,8 +14,6 @@ const StatusSequenceList = () => {
 			_eq: statusPipelineTypeLinkID,
 		}
 	})
-
-	console.log(statusPipelines)
 
 	const onCreate = () => {
 		router.push('create-status-sequence');
