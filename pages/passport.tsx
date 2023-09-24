@@ -1,9 +1,10 @@
 import React from 'react';
 import { Page } from '../components/page';
+import Passport from "../components/passport/Passport";
 
 function Content() {
 	return (
-		<div>passport</div>
+		<Passport/>
 	);
 }
 
