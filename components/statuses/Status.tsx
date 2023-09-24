@@ -19,7 +19,7 @@ const Status = (props: StatusProps) => {
 		setNodeRef,
 		transform,
 		transition,
-	} = useSortable({id: props.name});
+	} = useSortable({id: props.id});
 
 	const style: CSSProperties = {
 		transform: CSS.Transform.toString(transform),

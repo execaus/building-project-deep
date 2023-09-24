@@ -67,8 +67,11 @@ function Content() {
 
 		if (active.id !== over.id) {
 			setStatusSequence((items) => {
-				const oldIndex = items.indexOf(active.id);
-				const newIndex = items.indexOf(over.id);
+				const oldItem = items.find(item => item.id === active.id);
+				const oldIndex = items.indexOf(oldItem);
+
+				const newItem = items.find(item => item.id === over.id);
+				const newIndex = items.indexOf(newItem);
 
 				return arrayMove(items, oldIndex, newIndex);
 			});
