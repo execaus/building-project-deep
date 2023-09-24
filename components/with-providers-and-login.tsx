@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { processEnvs } from "../imports/process-envs";
 
 export function WithProvidersAndLogin({ children }: { children: JSX.Element }) {
-  const [gqlPath, setGqlPath] = useLocalStore(CapacitorStoreKeys[CapacitorStoreKeys.GraphQlPath], processEnvs.graphQlPath)
+  const [ gqlPath ] = useLocalStore(CapacitorStoreKeys[CapacitorStoreKeys.GraphQlPath], processEnvs.graphQlPath)
   return (
     <>
       <ChakraProvider>
@@ -18,16 +18,15 @@ export function WithProvidersAndLogin({ children }: { children: JSX.Element }) {
             options={{
               client: 'deeplinks-app',
               path: gqlPath,
-              ssl: true,
+              ssl: false,
+              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGF' +
+                  'zdXJhLWFsbG93ZWQtcm9sZXMiOlsiYWRtaW4iXSwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoiYWRtaW4iLCJ4LWhhc3' +
+                  'VyYS11c2VyLWlkIjoiMzgwIn0sImlhdCI6MTY5NDkzMzQzNH0.7t4_aUm6guNBs5pPrqcLgKBS1SFZbVYKDmgwnl3B1DE',
               ws: !!process?.browser,
             }}
           >
             <DeepProvider>
-              <WithLogin gqlPath={gqlPath} setGqlPath={(newGqlPath) => {
-                setGqlPath(newGqlPath)
-              }} >
                 {children}
-              </WithLogin>
             </DeepProvider>
           </ApolloClientTokenizedProvider>
         </TokenProvider>

@@ -3,11 +3,11 @@ import { Page } from '../components/page';
 
 function Content() {
 	return (
-		<div>index</div>
+		<div>dash</div>
 	);
 }
 
-export default function IndexPage() {
+export default function DashboardPage() {
 	return (
 		<Page>
 			<Content/>
