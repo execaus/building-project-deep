@@ -1,16 +1,7 @@
 import {
 	Box,
-	Card,
-	CardBody,
-	CardHeader, Grid,
 	Heading, HStack,
-	Input,
-	InputGroup,
-	InputLeftElement, Stack,
-	StackDivider, Text
 } from "@chakra-ui/react";
-import {Search} from "@mui/icons-material";
-import DocumentsTable from "../documents/DocumentsTable";
 import { Image } from '@chakra-ui/react'
 import React from "react";
 import InformationObject from "./InformationObject";
