@@ -1,5 +1,5 @@
 import React from 'react';
-import {Page} from '../components/page';
+import {Page} from '../../components/page';
 import {Gantt, Task} from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
 import {
@@ -10,9 +10,13 @@ import {
     List, ListItem, ListIcon, HStack
 } from "@chakra-ui/react";
 import {Circle} from "@mui/icons-material";
-import {NavBar} from "../components/navbar";
+import {NavBar} from "../../components/navbar";
+import { useRouter } from 'next/router';
 
 function Content() {
+    const router = useRouter()
+    const { id } = router.query
+
     let tasks: Task[] = [
         {
             start: new Date(2020, 1, 1),

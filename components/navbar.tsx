@@ -21,7 +21,7 @@ export function NavBar(props: { projectID?: string }) {
 
 		{
 			props.projectID ? <>
-				<Button onClick={() => router.push('/dashboard')}>
+				<Button onClick={() => router.push(`/dashboard/${props.projectID}`)}>
 					<CalendarMonthOutlined />
 				</Button>
 				<Button onClick={() => router.push('/passport')}>
