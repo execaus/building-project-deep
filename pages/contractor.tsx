@@ -6,7 +6,7 @@ import {Box} from "@chakra-ui/layout";
 
 function Content() {
 	return (
-		<Box p={20} >
+		<Box p={10} >
 			<Heading as='h1' size='2xl' textAlign="left">
 				Экран подрядчика
 			</Heading>
@@ -47,7 +47,6 @@ function Content() {
 				</HStack>
 			</VStack>
 		</Box>
-
 	);
 }
 
