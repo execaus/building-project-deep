@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import { Page } from '../components/page';
-import { Box, Button, Card, Grid, Heading, HStack, Input, VStack } from '@chakra-ui/react';
+import {
+	Alert,
+	AlertIcon,
+	Box,
+	Button,
+	Card,
+	Grid,
+	Heading,
+	HStack,
+	Input,
+	useDisclosure,
+	VStack
+} from '@chakra-ui/react';
 import Status from '../components/statuses/Status';
-import { useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
+import { useDeep, useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import {
 	arrayMove,
@@ -10,8 +22,12 @@ import {
 	SortableContext,
 	sortableKeyboardCoordinates
 } from '@dnd-kit/sortable';
+import { useRouter } from 'next/navigation';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 
 function Content() {
+	const deep = useDeep()
+	const router = useRouter()
 	const [statusSequence, setStatusSequence] = useState<{
 		name: string,
 		id: number,
@@ -55,6 +71,12 @@ function Content() {
 		}
 	})
 
+	const {
+		isOpen: isVisibleError,
+		onClose,
+		onOpen,
+	} = useDisclosure()
+
 	const sensors = useSensors(
 		useSensor(PointerSensor),
 		useSensor(KeyboardSensor, {
@@ -78,20 +100,55 @@ function Content() {
 		}
 	}
 
+	const onCreateSequence = async () => {
+		if (sequenceName.length === 0) {
+			onOpen();
+			setTimeout(() => {
+				onClose()
+			}, 5000);
+			return;
+		}
+
+		const statusTypeLinkId = await deep.id("@l4legenda/status-pipeline", "Status")
+
+		const {data: [{ id: statusLinkId }]} = await deep.insert({
+			type_id: statusTypeLinkId,
+			object: {data: {value: [...statusSequence.map(item => item.name)]}},
+		})
+
+		router.back()
+	};
+
+	const onRemove = (id: number) => {
+		setStatusSequence(items => {
+			return items.filter(item => item.id !== id);
+		});
+	};
+
+	const onAppend = (status: {name: string, id: number}) => {
+		setStatusSequence(items => {
+			return [...items, status];
+		});
+	};
+
 	return (
+		<>
 			<VStack p={ 10 } h={ '100vh' }>
 				<HStack w={ '100%' }>
 					<Heading>Создание цепочки статусов</Heading>
 					<Input w={ 600 } marginLeft={ 'auto' } type={ 'text' } value={ sequenceName } onChange={ onChange }
 						   placeholder={ 'Название последовательности' }></Input>
-					<Button colorScheme={ 'green' }>Создать</Button>
+					<Button colorScheme={ 'green' } onClick={onCreateSequence}>Создать</Button>
 				</HStack>
 				<Grid templateColumns={ '3fr 6fr' } w={ '100%' } h={ '100%' } gap={ 4 }>
 					<Card p={ 2 } h={ '100%' }>
 						{
-							statuses.map(status => <Box marginTop={ 2 } key={ status.id }>
+							statuses.map(status => <HStack marginTop={ 2 } key={ status.id }>
 								<Status name={ status.value?.value } id={status.id} isDeleteShow={true}></Status>
-							</Box>)
+								<Button onClick={() => onAppend({ name: status.name, id: status.id })}>
+									<ChevronRight />
+								</Button>
+							</HStack>)
 						}
 					</Card>
 					<Card p={2}>
@@ -105,15 +162,30 @@ function Content() {
 								items={ statusSequence }
 								strategy={ horizontalListSortingStrategy }
 							>
-								{ statusSequence.map(status => <Box marginTop={ 2 } key={ status.id }>
+								{ statusSequence.map(status => <HStack marginTop={ 2 } key={ status.id }>
+									<Button onClick={ () => onRemove(status.id) }>
+										<ChevronLeft />
+									</Button>
 									<Status name={ status.name } id={ status.id } isDeleteShow={false}></Status>
-								</Box>)
+								</HStack>)
 								}
 							</SortableContext>
 						</DndContext>
 					</Card>
 				</Grid>
 			</VStack>
+			{
+				isVisibleError ? <div style={{
+					position: "absolute",
+					left: 10,
+					top: 10,
+					width: "calc(100% - 20px)",
+				}}><Alert status='error'>
+					<AlertIcon />
+					Для создания последовательности необходимо дать ей название
+				</Alert></div> : null
+			}
+		</>
 	);
 }
 
