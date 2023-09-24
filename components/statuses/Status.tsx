@@ -3,13 +3,15 @@ import { Button, HStack } from '@chakra-ui/react';
 import { useSortable } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import { Delete } from '@mui/icons-material';
+import { useDeep } from '@deep-foundation/deeplinks/imports/client';
 
 export interface StatusProps {
 	name: string,
-	id?: string,
+	id: number,
 }
 
 const Status = (props: StatusProps) => {
+	const deep = useDeep();
 	const {
 		attributes,
 		listeners,
@@ -23,12 +25,12 @@ const Status = (props: StatusProps) => {
 		transition,
 	};
 
-	const onDelete = () => {
-
+	const onDelete = async () => {
+		await deep.delete({id: props.id})
 	};
 
 	return (
-		<HStack ref={setNodeRef} style={style} {...attributes} {...listeners}>
+		<HStack w={"100%"} ref={setNodeRef} style={style} {...attributes} {...listeners}>
 			<Button w={"100%"} p={4}>{ props.name }</Button>
 			<Button onClick={onDelete}>
 				<Delete />
