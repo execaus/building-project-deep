@@ -1,10 +1,13 @@
 import React from 'react';
 import { Page } from '../components/page';
 import { useRouter } from 'next/navigation';
+import { VStack } from '@chakra-ui/react';
 
 function Content() {
 	return (
-		<div>projects</div>
+		<VStack spacing={8}>
+
+		</VStack>
 	);
 }
 
