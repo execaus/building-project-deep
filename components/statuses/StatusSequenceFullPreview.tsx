@@ -20,7 +20,7 @@ const StatusSequenceFullPreview = (props: StatusSequenceFullPreviewProps) => {
 	return (
 		<VStack >
 			{
-				props.items.map((item, index) => <Status name={ item } key={ index }/>)
+				props.items.map((item, index) => <Status name={ item } key={ item } id={ index } isDeleteShow={false} />)
 			}
 		</VStack>
 	);
