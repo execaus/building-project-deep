@@ -1,12 +1,37 @@
 import React from 'react';
-import { Box } from '@chakra-ui/layout';
-import CustomBlock from '../customs/CustomBlock';
+import { Card, Heading, VStack } from '@chakra-ui/react';
+import StatusSequencePreview, { StatusSequencePreviewProps } from './StatusSequencePreview';
 
 const StatusSequenceList = () => {
-	return (
-		<CustomBlock>
+	const list: StatusSequencePreviewProps[] = [
+		{
+			name: 'Статус'
+		},
+		{
+			name: 'Статус'
+		},
+		{
+			name: 'Статус'
+		},
+		{
+			name: 'Статус'
+		},
+		{
+			name: 'Статус'
+		},{
+			name: 'Статус'
+		},
+	]
 
-		</CustomBlock>
+	return (
+		<Card p={4}>
+			<VStack>
+				<Heading as='h4' size='md'>Статусы</Heading>
+				{
+					list.map((status, index) => <StatusSequencePreview name={status.name} key={index}/>)
+				}
+			</VStack>
+		</Card>
 	);
 };
 
