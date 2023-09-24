@@ -42,9 +42,9 @@ const StatusList = () => {
 	};
 
 	return (
-		<>
-			<Card p={"3"} >
-				<HStack>
+		<Box h={"100%"}>
+			<Card p={"3"} h={"100%"}>
+				<HStack >
 					<Heading as='h4' size='md'>Статусы</Heading>
 					<Button colorScheme="green" onClick={onOpen} marginLeft={"auto"}>
 						<Add/>
@@ -52,7 +52,7 @@ const StatusList = () => {
 				</HStack>
 				{
 					statuses.map((status, index) => <Box marginTop={2}>
-						<Status name={status.value?.value} key={index}></Status>
+						<Status name={status.value?.value} id={status.id} key={index} isDeleteShow={true}></Status>
 					</Box>)
 				}
 			</Card>
@@ -73,7 +73,7 @@ const StatusList = () => {
 					</ModalFooter>
 				</ModalContent>
 			</Modal>
-		</>
+		</Box>
 	);
 };
 

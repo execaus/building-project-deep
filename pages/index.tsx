@@ -4,7 +4,7 @@ import { Button, VStack } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 
 function Content() {
-	const navigator = useRouter()
+	const router = useRouter()
 
 	return (
 		<VStack spacing={8}>

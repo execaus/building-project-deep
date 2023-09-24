@@ -6,9 +6,9 @@ import StatusSequenceList from '../components/statuses/StatusSequenceList';
 
 function Content() {
 	return (
-		<VStack p={10}>
+		<VStack p={10} h={"100vh"}>
 			<Heading>Статусы</Heading>
-			<Grid templateColumns={"3fr 7fr"} gap={4} width={"100%"} p={6}>
+			<Grid templateColumns={"3fr 7fr"} gap={4} width={"100%"} h={"100%"} p={6}>
 				<StatusList />
 				<StatusSequenceList />
 			</Grid>
