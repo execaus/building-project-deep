@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button, Card, Flex, Heading, HStack } from '@chakra-ui/react';
+import { Box, Button, Card, Flex, Heading, HStack } from '@chakra-ui/react';
 import StatusSequencePreview from './StatusSequencePreview';
-import { Add } from '@mui/icons-material';
+import { Add, ChevronRight, Delete } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
-import { useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
+import { useDeep, useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
 
 const StatusSequenceList = () => {
 	const router = useRouter()
+	const deep = useDeep()
 
 	const { data: statusPipelineTypeLinkID } = useDeepId("@l4legenda/status-pipeline", "StatusPipeline")
 	const { data: statusPipelines } = useDeepSubscription({
@@ -19,6 +20,10 @@ const StatusSequenceList = () => {
 		router.push('create-status-sequence');
 	};
 
+	const onRemove = async (id: number) => {
+		await deep.delete({id: id})
+	};
+
 	return (
 		<Card p={4}>
 			<HStack paddingBottom={2}>
@@ -29,8 +34,15 @@ const StatusSequenceList = () => {
 			</HStack>
 			<Flex justifyContent={"left"} flexDirection={"column"}>
 				{
-					statusPipelines.map((sequence, index) =>
-						<StatusSequencePreview name={sequence.value?.value?.name} statuses={sequence.value?.value?.pipeline} key={index} />
+					statusPipelines.map((sequence) =>
+						<Box key={sequence.value?.id} marginBottom={2}>
+							<HStack >
+								<StatusSequencePreview name={sequence.value?.value?.name} statuses={sequence.value?.value?.pipeline} />
+								<Button onClick={ () => onRemove(sequence.id) }>
+									<Delete/>
+								</Button>
+							</HStack>
+						</Box>
 					)
 				}
 			</Flex>

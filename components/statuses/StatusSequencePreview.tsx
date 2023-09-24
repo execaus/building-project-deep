@@ -21,7 +21,7 @@ const StatusSequencePreview = (props: StatusSequencePreviewProps) => {
 
 	return (
 		<>
-			<Button p={3} marginBottom={2} onClick={onOpen}>
+			<Button w={"100%"} p={3} onClick={onOpen}>
 				{ props.name }
 			</Button>
 			<Modal isOpen={isOpen} onClose={onClose}>
