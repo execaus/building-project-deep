@@ -8,27 +8,84 @@ const StatusSequenceList = () => {
 
 	const list: StatusSequencePreviewProps[] = [
 		{
-			name: 'Статус'
+			name: 'Последовательность статусов',
+			statuses: [
+				"Первый статус",
+				"Второй статус",
+				"Третий статус",
+				"Четвертый статус",
+				"Пятый статус",
+			]
 		},
 		{
-			name: 'Статус'
-		},
-		{
-			name: 'Статус'
-		},
-		{
-			name: 'Статус'
-		},
-		{
-			name: 'Статус'
+			name: 'Последовательность статусов',
+			statuses: [
+				"Первый статус",
+				"Второй статус",
+				"Третий статус",
+				"Четвертый статус",
+				"Пятый статус",
+			]
 		},{
-			name: 'Статус'
+			name: 'Последовательность статусов',
+			statuses: [
+				"Первый статус",
+				"Второй статус",
+				"Третий статус",
+				"Четвертый статус",
+				"Пятый статус",
+			]
+		},{
+			name: 'Последовательность статусов',
+			statuses: [
+				"Первый статус",
+				"Второй статус",
+				"Третий статус",
+				"Четвертый статус",
+				"Пятый статус",
+			]
+		},{
+			name: 'Последовательность статусов',
+			statuses: [
+				"Первый статус",
+				"Второй статус",
+				"Третий статус",
+				"Четвертый статус",
+				"Пятый статус",
+			]
+		},{
+			name: 'Последовательность статусов',
+			statuses: [
+				"Первый статус",
+				"Второй статус",
+				"Третий статус",
+				"Четвертый статус",
+				"Пятый статус",
+			]
+		},{
+			name: 'Последовательность статусов',
+			statuses: [
+				"Первый статус",
+				"Второй статус",
+				"Третий статус",
+				"Четвертый статус",
+				"Пятый статус",
+			]
+		},{
+			name: 'Последовательность статусов',
+			statuses: [
+				"Первый статус",
+				"Второй статус",
+				"Третий статус",
+				"Четвертый статус",
+				"Пятый статус",
+			]
 		},
 	]
 
 	return (
 		<Card p={4}>
-			<HStack>
+			<HStack paddingBottom={2}>
 				<Heading as='h4' size='md' marginBottom={4}>Цепочки статусов</Heading>
 				<Button colorScheme="green" onClick={onOpen} marginLeft={"auto"}>
 					<Add/>
@@ -36,7 +93,7 @@ const StatusSequenceList = () => {
 			</HStack>
 			<Flex justifyContent={"left"} flexDirection={"column"}>
 				{
-					list.map((status, index) => <StatusSequencePreview name={status.name} key={index}/>)
+					list.map((sequence, index) => <StatusSequencePreview name={sequence.name} statuses={sequence.statuses} key={index}/>)
 				}
 			</Flex>
 		</Card>
