@@ -1,12 +1,12 @@
 import { Box, Button, Card, Grid, Heading, HStack, Image, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { Page } from '../components/page';
+import { Page } from '../../components/page';
 import { useRouter } from 'next/navigation';
-import { NavBar } from '../components/navbar';
-import Passport from '../components/passport/Passport';
+import { NavBar } from '../../components/navbar';
 
 function Content() {
 	const router = useRouter()
+	const { id } = router.query;
 	const [projects, setProject] = useState([
 		{
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
