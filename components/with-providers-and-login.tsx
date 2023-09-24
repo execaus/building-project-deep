@@ -18,10 +18,8 @@ export function WithProvidersAndLogin({ children }: { children: JSX.Element }) {
             options={{
               client: 'deeplinks-app',
               path: gqlPath,
-              ssl: false,
-              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGF' +
-                  'zdXJhLWFsbG93ZWQtcm9sZXMiOlsiYWRtaW4iXSwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoiYWRtaW4iLCJ4LWhhc3' +
-                  'VyYS11c2VyLWlkIjoiMzgwIn0sImlhdCI6MTY5NDkzMzQzNH0.7t4_aUm6guNBs5pPrqcLgKBS1SFZbVYKDmgwnl3B1DE',
+              ssl: true,
+              token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsiYWRtaW4iXSwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoiYWRtaW4iLCJ4LWhhc3VyYS11c2VyLWlkIjoiMzgwIn0sImlhdCI6MTY5NTU0MjAzNn0.ff7Tn_iQT6gauiKzbyBd8jeFur_mMNQ9kjGO6zRmVeE',
               ws: !!process?.browser,
             }}
           >
