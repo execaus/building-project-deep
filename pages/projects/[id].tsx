@@ -1,12 +1,30 @@
-import { Box, Button, Card, Grid, Heading, HStack, Image, Text } from '@chakra-ui/react';
+import {
+	Box,
+	Button,
+	Card, FormControl, FormLabel,
+	Grid,
+	Heading,
+	HStack,
+	Image, Input,
+	Modal, ModalBody, ModalCloseButton,
+	ModalContent, ModalFooter, ModalHeader,
+	ModalOverlay,
+	Text, useDisclosure
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { Page } from '../components/page';
 import { useRouter } from 'next/navigation';
-import { NavBar } from '../components/navbar';
-import Passport from '../components/passport/Passport';
-
+import {NavBar} from "../../components/navbar";
+import {Page} from "../../components/page";
 function Content() {
 	const router = useRouter()
+	const { isOpen, onOpen, onClose } = useDisclosure()
+	const onCreate = () => {
+		router.push('passport');
+	};
+
+
+	const initialRef = React.useRef(null)
+	const finalRef = React.useRef(null)
 	const [projects, setProject] = useState([
 		{
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
@@ -56,7 +74,7 @@ function Content() {
 			<Box p={10} w={"100%"} h={"100vh"}>
 				<HStack paddingBottom={4}>
 					<Heading>Проекты</Heading>
-					<Button marginLeft={"auto"} colorScheme={"green"}>Создать проект</Button>
+					<Button marginLeft={"auto"} colorScheme={"green"} onClick={onOpen}>Создать проект</Button>
 				</HStack>
 				<Grid gap={8} templateColumns={"repeat(6, 1fr)"}>
 					{
@@ -71,6 +89,48 @@ function Content() {
 					}
 				</Grid>
 			</Box>
+            <Modal
+                initialFocusRef={initialRef}
+                finalFocusRef={finalRef}
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Общая информация</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody pb={6}>
+                        <FormControl>
+                            <FormLabel>Название проекта</FormLabel>
+                            <Input/>
+                        </FormControl>
+
+                        <FormControl mt={4}>
+                            <FormLabel>Дата начала</FormLabel>
+                            <Input />
+                        </FormControl>
+
+                        <FormControl mt={4}>
+                            <FormLabel>Дата окончания</FormLabel>
+                            <Input />
+                        </FormControl>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <FormControl>
+                            <FormLabel>Загрузить документы</FormLabel>
+                            <Input type="file" />
+                        </FormControl>
+                    </ModalFooter>
+
+                    <ModalFooter>
+                        <Button colorScheme="teal" onClick={onCreate} mr={4}>
+                            Сохранить
+                        </Button>
+                        <Button onClick={onClose} pl={4}>Закрыть</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
 		</HStack>
 	);
 }
