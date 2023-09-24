@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Button, HStack } from '@chakra-ui/react';
 import { useSortable } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
@@ -21,7 +21,7 @@ const Status = (props: StatusProps) => {
 		transition,
 	} = useSortable({id: props.name});
 
-	const style = {
+	const style: CSSProperties = {
 		transform: CSS.Transform.toString(transform),
 		position: 'relative',
 		zIndex: attributes['aria-pressed'] ? 1000 : 1,
