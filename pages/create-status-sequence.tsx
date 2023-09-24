@@ -31,32 +31,7 @@ function Content() {
 	const [statusSequence, setStatusSequence] = useState<{
 		name: string,
 		id: number,
-	}[]>([
-		{
-			name: 'asdasd1',
-			id: 1
-		},
-		{
-			name: 'asdasd2',
-			id: 2
-		},
-		{
-			name: 'asdasd3',
-			id: 3
-		},
-		{
-			name: 'asdasd4',
-			id: 4
-		},
-		{
-			name: 'asdasd5',
-			id: 5
-		},
-		{
-			name: 'asdasd6',
-			id: 6
-		},
-	]);
+	}[]>([]);
 
 	const [sequenceName, setSequenceName] = useState('')
 	const onChange = (ev) => {
@@ -109,11 +84,18 @@ function Content() {
 			return;
 		}
 
-		const statusTypeLinkId = await deep.id("@l4legenda/status-pipeline", "Status")
+		const statusPipelineTypeLinkId = await deep.id('@l4legenda/status-pipeline', 'StatusPipeline')
 
-		const {data: [{ id: statusLinkId }]} = await deep.insert({
-			type_id: statusTypeLinkId,
-			object: {data: {value: [...statusSequence.map(item => item.name)]}},
+		const { data: [{ id: statusLinkId }] } = await deep.insert({
+			type_id: statusPipelineTypeLinkId,
+			object: {
+				data: {
+					value: {
+						name: sequenceName,
+						pipeline: [...statusSequence.map(item => item.name)],
+					}
+				}
+			},
 		})
 
 		router.back()
@@ -125,7 +107,7 @@ function Content() {
 		});
 	};
 
-	const onAppend = (status: {name: string, id: number}) => {
+	const onAppend = (status: { name: string, id: number }) => {
 		setStatusSequence(items => {
 			return [...items, status];
 		});
@@ -138,22 +120,22 @@ function Content() {
 					<Heading>Создание цепочки статусов</Heading>
 					<Input w={ 600 } marginLeft={ 'auto' } type={ 'text' } value={ sequenceName } onChange={ onChange }
 						   placeholder={ 'Название последовательности' }></Input>
-					<Button colorScheme={ 'green' } onClick={onCreateSequence}>Создать</Button>
+					<Button colorScheme={ 'green' } onClick={ onCreateSequence }>Создать</Button>
 				</HStack>
 				<Grid templateColumns={ '3fr 6fr' } w={ '100%' } h={ '100%' } gap={ 4 }>
 					<Card p={ 2 } h={ '100%' }>
 						{
 							statuses.map(status => <HStack marginTop={ 2 } key={ status.id }>
-								<Status name={ status.value?.value } id={status.id} isDeleteShow={true}></Status>
-								<Button onClick={() => onAppend({ name: status.name, id: status.id })}>
-									<ChevronRight />
+								<Status name={ status.value?.value } id={ status.id } isDeleteShow={ false }></Status>
+								<Button onClick={ () => onAppend({ name: status.value?.value, id: status.id }) }>
+									<ChevronRight/>
 								</Button>
 							</HStack>)
 						}
 					</Card>
-					<Card p={2}>
+					<Card p={ 2 }>
 						<DndContext
-							id={"create status sequence list"}
+							id={ 'create status sequence list' }
 							sensors={ sensors }
 							collisionDetection={ closestCenter }
 							onDragEnd={ handleDragEnd }
@@ -164,9 +146,9 @@ function Content() {
 							>
 								{ statusSequence.map(status => <HStack marginTop={ 2 } key={ status.id }>
 									<Button onClick={ () => onRemove(status.id) }>
-										<ChevronLeft />
+										<ChevronLeft/>
 									</Button>
-									<Status name={ status.name } id={ status.id } isDeleteShow={false}></Status>
+									<Status name={ status.name } id={ status.id } isDeleteShow={ false }></Status>
 								</HStack>)
 								}
 							</SortableContext>
@@ -175,13 +157,13 @@ function Content() {
 				</Grid>
 			</VStack>
 			{
-				isVisibleError ? <div style={{
-					position: "absolute",
+				isVisibleError ? <div style={ {
+					position: 'absolute',
 					left: 10,
 					top: 10,
-					width: "calc(100% - 20px)",
-				}}><Alert status='error'>
-					<AlertIcon />
+					width: 'calc(100% - 20px)',
+				} }><Alert status="error">
+					<AlertIcon/>
 					Для создания последовательности необходимо дать ей название
 				</Alert></div> : null
 			}

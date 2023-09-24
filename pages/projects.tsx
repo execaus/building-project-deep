@@ -49,7 +49,7 @@ function Content() {
 	])
 
 	return (
-		<Box p={4} w={"100%"}>
+		<Box p={10} w={"100%"}>
 			<HStack paddingBottom={4}>
 				<Heading>Проекты</Heading>
 				<Button marginLeft={"auto"} colorScheme={"green"}>Создать проект</Button>
