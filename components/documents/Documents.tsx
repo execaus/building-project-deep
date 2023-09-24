@@ -19,7 +19,7 @@ import DocumentsTable from "./DocumentsTable";
 
 const Documents = () => {
 	return (
-		<Box p={20}>
+		<Box p={10} w={"100%"} h={"100vh"}>
 			<Heading as="h1" size="xl" textAlign="left">
 				Документы
 			</Heading>

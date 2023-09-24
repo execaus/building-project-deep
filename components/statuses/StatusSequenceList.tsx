@@ -1,87 +1,19 @@
 import React from 'react';
-import { Box, Button, Card, Flex, HStack, Heading, Stack, VStack, useDisclosure } from '@chakra-ui/react';
-import StatusSequencePreview, { StatusSequencePreviewProps } from './StatusSequencePreview';
+import { Button, Card, Flex, Heading, HStack } from '@chakra-ui/react';
+import StatusSequencePreview from './StatusSequencePreview';
 import { Add } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
+import { useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
 
 const StatusSequenceList = () => {
 	const router = useRouter()
-	const list: StatusSequencePreviewProps[] = [
-		{
-			name: 'Последовательность статусов',
-			statuses: [
-				"Первый статус",
-				"Второй статус",
-				"Третий статус",
-				"Четвертый статус",
-				"Пятый статус",
-			]
-		},
-		{
-			name: 'Последовательность статусов',
-			statuses: [
-				"Первый статус",
-				"Второй статус",
-				"Третий статус",
-				"Четвертый статус",
-				"Пятый статус",
-			]
-		},{
-			name: 'Последовательность статусов',
-			statuses: [
-				"Первый статус",
-				"Второй статус",
-				"Третий статус",
-				"Четвертый статус",
-				"Пятый статус",
-			]
-		},{
-			name: 'Последовательность статусов',
-			statuses: [
-				"Первый статус",
-				"Второй статус",
-				"Третий статус",
-				"Четвертый статус",
-				"Пятый статус",
-			]
-		},{
-			name: 'Последовательность статусов',
-			statuses: [
-				"Первый статус",
-				"Второй статус",
-				"Третий статус",
-				"Четвертый статус",
-				"Пятый статус",
-			]
-		},{
-			name: 'Последовательность статусов',
-			statuses: [
-				"Первый статус",
-				"Второй статус",
-				"Третий статус",
-				"Четвертый статус",
-				"Пятый статус",
-			]
-		},{
-			name: 'Последовательность статусов',
-			statuses: [
-				"Первый статус",
-				"Второй статус",
-				"Третий статус",
-				"Четвертый статус",
-				"Пятый статус",
-			]
-		},{
-			name: 'Последовательность статусов',
-			statuses: [
-				"Первый статус",
-				"Второй статус",
-				"Третий статус",
-				"Четвертый статус",
-				"Пятый статус",
-			]
-		},
-	]
+
+	const { data: statusPipelineTypeLinkID } = useDeepId("@l4legenda/status-pipeline", "StatusPipeline")
+	const { data: statusPipelines } = useDeepSubscription({
+		type_id: {
+			_eq: statusPipelineTypeLinkID,
+		}
+	})
 
 	const onCreate = () => {
 		router.push('create-status-sequence');
@@ -97,7 +29,9 @@ const StatusSequenceList = () => {
 			</HStack>
 			<Flex justifyContent={"left"} flexDirection={"column"}>
 				{
-					list.map((sequence, index) => <StatusSequencePreview name={sequence.name} statuses={sequence.statuses} key={index} />)
+					statusPipelines.map((sequence, index) =>
+						<StatusSequencePreview name={sequence.value?.value?.name} statuses={sequence.value?.value?.pipeline} key={index} />
+					)
 				}
 			</Flex>
 		</Card>

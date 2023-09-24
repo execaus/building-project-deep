@@ -9,7 +9,7 @@ import ProjectInPassport from "./ProjectInPassport";
 
 const Passport = () => {
 	return (
-		<Box p={20}>
+		<Box p={10}>
 			<Heading as="h1" fontSize="38" textAlign="left">
 				Паспорт обьекта
 			</Heading>
