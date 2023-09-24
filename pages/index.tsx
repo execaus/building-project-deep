@@ -1,9 +1,16 @@
 import React from 'react';
 import { Page } from '../components/page';
+import { Button, VStack } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 
 function Content() {
+	const navigator = useRouter()
+
 	return (
-		<div>index</div>
+		<VStack>
+			<Button colorScheme="blue" onClick={() => navigator.push("/projects")}>Проекты</Button>
+			<Button colorScheme="blue">Гость</Button>
+		</VStack>
 	);
 }
 
