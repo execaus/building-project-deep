@@ -8,6 +8,7 @@ import { useDeep } from '@deep-foundation/deeplinks/imports/client';
 export interface StatusProps {
 	name: string,
 	id: number,
+	isDeleteShow: boolean,
 }
 
 const Status = (props: StatusProps) => {
@@ -34,9 +35,11 @@ const Status = (props: StatusProps) => {
 	return (
 		<HStack w={"100%"} ref={setNodeRef} style={style} {...attributes} {...listeners}>
 			<Button w={"100%"} p={4}>{ props.name }</Button>
-			<Button onClick={onDelete}>
-				<Delete />
-			</Button>
+			{
+				props.isDeleteShow ? <Button onClick={onDelete}>
+					<Delete />
+				</Button> : null
+			}
 		</HStack>
 	);
 };

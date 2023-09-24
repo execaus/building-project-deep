@@ -52,7 +52,7 @@ const StatusList = () => {
 				</HStack>
 				{
 					statuses.map((status, index) => <Box marginTop={2}>
-						<Status name={status.value?.value} id={status.id} key={index}></Status>
+						<Status name={status.value?.value} id={status.id} key={index} isDeleteShow={true}></Status>
 					</Box>)
 				}
 			</Card>
