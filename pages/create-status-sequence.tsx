@@ -10,8 +10,6 @@ import {
 	sortableKeyboardCoordinates,
 	verticalListSortingStrategy
 } from '@dnd-kit/sortable';
-import NoSsr from '../components/NoSsr';
-import { NoSSR } from 'next/dist/shared/lib/lazy-dynamic/dynamic-no-ssr';
 
 function Content() {
 	const [statusSequence, setStatusSequence] = useState<string[]>(['asdasd1', 'asdasd2', 'asdasd3', 'asdasd4', 'asdasd5', 'asdas6d']);
@@ -50,48 +48,48 @@ function Content() {
 	}
 
 	return (
-			<VStack p={ 10 } h={ '100vh' }>
-				<HStack w={ '100%' }>
-					<Heading>Создание цепочки статусов</Heading>
-					<Input w={ 600 } marginLeft={ 'auto' } type={ 'text' } value={ sequenceName } onChange={ onChange }
-						   placeholder={ 'Название последовательности' }></Input>
-					<Button colorScheme={ 'green' }>Создать</Button>
-				</HStack>
-				<Grid templateColumns={ '3fr 6fr' } w={ '100%' } h={ '100%' } gap={ 4 }>
-					<Card p={ 2 } h={ '100%' }>
-						{
-							statuses.map((status, index) => <Box marginTop={ 2 }>
-								<Status name={ status.value?.value } key={ index }></Status>
-							</Box>)
-						}
-					</Card>
-					<Card p={2}>
-						<DndContext
-							id={"create status sequence list"}
-							sensors={ sensors }
-							collisionDetection={ closestCenter }
-							onDragEnd={ handleDragEnd }
+		<VStack p={10} h={'100vh'}>
+			<HStack w={'100%'}>
+				<Heading>Создание цепочки статусов</Heading>
+				<Input w={600} marginLeft={'auto'} type={'text'} value={sequenceName} onChange={onChange}
+					placeholder={'Название последовательности'}></Input>
+				<Button colorScheme={'green'}>Создать</Button>
+			</HStack>
+			<Grid templateColumns={'3fr 6fr'} w={'100%'} h={'100%'} gap={4}>
+				<Card p={2} h={'100%'}>
+					{
+						statuses.map((status, index) => <Box marginTop={2} key={index}>
+							<Status name={status.value?.value} ></Status>
+						</Box>)
+					}
+				</Card>
+				<Card p={2}>
+					<DndContext
+						id={"create status sequence list"}
+						sensors={sensors}
+						collisionDetection={closestCenter}
+						onDragEnd={handleDragEnd}
+					>
+						<SortableContext
+							items={statusSequence}
+							strategy={horizontalListSortingStrategy}
 						>
-							<SortableContext
-								items={ statusSequence }
-								strategy={ horizontalListSortingStrategy }
-							>
-								{ statusSequence.map((status, index) => <Box marginTop={ 2 }>
-									<Status name={ status } key={ index } id={index.toString()}></Status>
-								</Box>)
-								}
-							</SortableContext>
-						</DndContext>
-					</Card>
-				</Grid>
-			</VStack>
+							{statusSequence.map((status, index) => <Box marginTop={2} key={index}>
+								<Status name={status} id={index}></Status>
+							</Box>)
+							}
+						</SortableContext>
+					</DndContext>
+				</Card>
+			</Grid>
+		</VStack>
 	);
 }
 
 export default function CreateStatusSequencePage() {
 	return (
 		<Page>
-			<Content/>
+			<Content />
 		</Page>
 	);
 }

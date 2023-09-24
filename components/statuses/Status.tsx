@@ -5,7 +5,7 @@ import {CSS} from '@dnd-kit/utilities';
 
 export interface StatusProps {
 	name: string,
-	id?: string,
+	id?: number,
 }
 
 const Status = (props: StatusProps) => {
@@ -15,10 +15,12 @@ const Status = (props: StatusProps) => {
 		setNodeRef,
 		transform,
 		transition,
-	} = useSortable({id: props.id});
+	} = useSortable({id: props.name});
 
 	const style = {
 		transform: CSS.Transform.toString(transform),
+		position: 'relative',
+		zIndex: attributes['aria-pressed'] ? 1000 : 1,
 		transition,
 	};
 
