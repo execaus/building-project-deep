@@ -7,7 +7,7 @@ function Content() {
 	const navigator = useRouter()
 
 	return (
-		<VStack>
+		<VStack spacing={8}>
 			<Button colorScheme="blue" onClick={() => navigator.push("/projects")}>Проекты</Button>
 			<Button colorScheme="blue">Гость</Button>
 		</VStack>
