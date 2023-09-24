@@ -3,7 +3,7 @@ import React from "react";
 import MapOnObject from "./MapOnObject";
 import Contractors from "./Contractors";
 
-const InformationObject = () => {
+const InformationObject = (props: { name: string, startDate: string, endDate: string }) => {
 	return (
 		<Grid templateColumns='repeat(3, 1fr)' gap="2">
 			<Card marginTop={10}>
@@ -17,7 +17,7 @@ const InformationObject = () => {
 								Название проекта
 							</Heading>
 							<Text pt='2' fontSize='sm'>
-								"Тут будет имя"
+								{ props.name }
 							</Text>
 						</Box>
 						<Box>
@@ -25,7 +25,7 @@ const InformationObject = () => {
 								Дата начала
 							</Heading>
 							<Text pt='2' fontSize='sm'>
-								01.01.1990
+								{ props.startDate }
 							</Text>
 						</Box>
 						<Box>
@@ -33,7 +33,7 @@ const InformationObject = () => {
 								Дата окончания
 							</Heading>
 							<Text pt='2' fontSize='sm'>
-								01.01.1990
+								{ props.endDate }
 							</Text>
 						</Box>
 					</Stack>

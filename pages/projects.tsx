@@ -69,6 +69,22 @@ function Content() {
 					method: "POST",
 					body: formData,
 				})
+
+				// const [{ data, loading, error }, refetch] = useAxios({
+				// 	method: 'get',
+				// 	`https://3007-deepfoundation-dev-umhddgfsgj6.ws-eu104.gitpod.io/api/file?linkId=${fileLinkId}`,
+				// 	headers: {
+				// 		'Authorization': `Bearer ${deep.token}`,
+				// 	},
+				// 	responseType: "blob",
+				// });
+				// if (!loading && data) {
+				// 	const reader = new window.FileReader();
+				// 	reader.onload = () => {
+				// 		setSrc(reader.result);
+				// 	};
+				// 	reader.readAsDataURL(data);
+				// }
 			}
 		}
 

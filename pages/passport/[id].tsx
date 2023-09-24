@@ -12,7 +12,7 @@ function Content() {
 	return (
 		<HStack>
 			<NavBar projectID={id as string}/>
-			<Passport/>
+			<Passport projectID={id as string}/>
 		</HStack>
 	);
 }
