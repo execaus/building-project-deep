@@ -13,8 +13,9 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {NavBar} from "../../components/navbar";
-import {Page} from "../../components/page";
+import { NavBar } from '../components/navbar';
+import { Page } from '../components/page';
+
 function Content() {
 	const router = useRouter()
 	const { isOpen, onOpen, onClose } = useDisclosure()
@@ -27,42 +28,52 @@ function Content() {
 	const finalRef = React.useRef(null)
 	const [projects, setProject] = useState([
 		{
+			id: 1,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 2,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 3,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 4,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 5,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 6,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 7,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 8,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 9,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
 		{
+			id: 10,
 			image: "https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg",
 			name: "Название проекта",
 		},
@@ -70,7 +81,7 @@ function Content() {
 
 	return (
 		<HStack>
-			<NavBar />
+			<NavBar/>
 			<Box p={10} w={"100%"} h={"100vh"}>
 				<HStack paddingBottom={4}>
 					<Heading>Проекты</Heading>
@@ -81,7 +92,7 @@ function Content() {
 						projects.map(project => <Card style={{
 							cursor: "pointer",
 						}} p={4} onClick={() => {
-							router.push("/passport")
+							router.push(`/passport/${project.id}`)
 						}}>
 							<Image src={project.image} w={300} />
 							<Text paddingTop={3} fontSize='xl'>{ project.name }</Text>
