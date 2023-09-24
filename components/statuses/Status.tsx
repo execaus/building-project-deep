@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button } from '@chakra-ui/react';
+import { Button, HStack } from '@chakra-ui/react';
 import { useSortable } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
+import { Delete } from '@mui/icons-material';
 
 export interface StatusProps {
 	name: string,
@@ -22,10 +23,17 @@ const Status = (props: StatusProps) => {
 		transition,
 	};
 
+	const onDelete = () => {
+
+	};
+
 	return (
-		<div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+		<HStack ref={setNodeRef} style={style} {...attributes} {...listeners}>
 			<Button w={"100%"} p={4}>{ props.name }</Button>
-		</div>
+			<Button onClick={onDelete}>
+				<Delete />
+			</Button>
+		</HStack>
 	);
 };
 
