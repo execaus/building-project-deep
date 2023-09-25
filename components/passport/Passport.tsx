@@ -37,7 +37,8 @@ const Passport = (props: { projectID: string }) => {
 				<GridItem>
 					<Image src="https://proprikol.ru/wp-content/uploads/2020/09/kartinki-mnogoetazhnyh-domov-20.jpg"
 						   alt="Паспорт обьекта"
-						   border="2px solid gray"/>
+						   boxShadow="0 0 1px gray"
+						   borderRadius={ '6px' }/>
 				</GridItem>
 				<GridItem>
 					<ProjectInPassport/>
