@@ -1,49 +1,44 @@
 import { useState } from 'react';
-import { Page } from '../../components/page';
-import { Box, Button, Flex, Editable, EditablePreview, EditableInput, Select, Card, CardBody, Text, CardHeader, Heading, Stack, StackDivider, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Input, ModalFooter, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Menu, MenuButton, MenuList, MenuItem, Checkbox, Spinner, CheckboxGroup, useCheckboxGroup } from '@chakra-ui/react';
-import { EditIcon, AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import {
+	Box,
+	Button,
+	Card,
+	CardBody,
+	CardHeader,
+	Checkbox,
+	CheckboxGroup,
+	Editable,
+	EditableInput,
+	EditablePreview,
+	Flex,
+	Heading,
+	Input,
+	Menu,
+	MenuButton,
+	MenuList,
+	Modal,
+	ModalBody,
+	ModalCloseButton,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalOverlay,
+	NumberDecrementStepper,
+	NumberIncrementStepper,
+	NumberInput,
+	NumberInputField,
+	NumberInputStepper,
+	Select,
+	Spinner,
+	Stack,
+	StackDivider,
+	Text,
+	useCheckboxGroup
+} from '@chakra-ui/react';
+import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { useDeep, useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
 import { useRouter } from 'next/router';
-import {useState} from 'react';
-import {Page} from '../components/page';
-import {
-    Box,
-    Button,
-    Flex,
-    Editable,
-    EditablePreview,
-    EditableInput,
-    Select,
-    Card,
-    CardBody,
-    Text,
-    CardHeader,
-    Heading,
-    Stack,
-    StackDivider,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    Input,
-    ModalFooter,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper,
-    Menu,
-    MenuButton,
-    MenuList,
-    Checkbox,
-    Spinner,
-    CheckboxGroup,
-    useCheckboxGroup
-} from '@chakra-ui/react';
-import {AddIcon, ChevronDownIcon} from '@chakra-ui/icons';
-import {useDeep, useDeepId, useDeepSubscription} from '@deep-foundation/deeplinks/imports/client';
+import { Page } from '../../components/page';
 
 
 function Content() {
