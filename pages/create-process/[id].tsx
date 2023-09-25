@@ -4,6 +4,46 @@ import { Box, Button, Flex, Editable, EditablePreview, EditableInput, Select, Ca
 import { EditIcon, AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { useDeep, useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
 import { useRouter } from 'next/router';
+import {useState} from 'react';
+import {Page} from '../components/page';
+import {
+    Box,
+    Button,
+    Flex,
+    Editable,
+    EditablePreview,
+    EditableInput,
+    Select,
+    Card,
+    CardBody,
+    Text,
+    CardHeader,
+    Heading,
+    Stack,
+    StackDivider,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalCloseButton,
+    ModalBody,
+    Input,
+    ModalFooter,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
+    NumberIncrementStepper,
+    NumberDecrementStepper,
+    Menu,
+    MenuButton,
+    MenuList,
+    Checkbox,
+    Spinner,
+    CheckboxGroup,
+    useCheckboxGroup
+} from '@chakra-ui/react';
+import {AddIcon, ChevronDownIcon} from '@chakra-ui/icons';
+import {useDeep, useDeepId, useDeepSubscription} from '@deep-foundation/deeplinks/imports/client';
 
 
 function Content() {
@@ -320,183 +360,180 @@ function Content() {
 						</CardBody>
 					</Card>
 
-					<Card mt={10}>
-						<CardHeader>
-							<Flex align={"center"}>
-								<Heading size='md' mr={4}>Подрядчики</Heading>
-								<Button ml="auto" onClick={onOpenModalContractor}><AddIcon /></Button>
-							</Flex>
+                    <Card mt={6}>
+                        <CardHeader>
+                            <Flex align={"center"}>
+                                <Heading size='md' mr={4}>Подрядчики</Heading>
+                                <Button ml="auto" onClick={onOpenModalContractor}><AddIcon/></Button>
+                            </Flex>
 
 						</CardHeader>
 
-						<CardBody >
-							<Stack divider={<StackDivider />} spacing='4' height={200} overflow={'auto'}>
-								{
-									hasLoadingContractor ? <Spinner
-										thickness='4px'
-										speed='0.65s'
-										emptyColor='gray.200'
-										color='blue.500'
-										size='xl'
-									/> : null
-								}
-								{
-									contractorListLink.map((material, index) => {
-										return <Box key={index}>
-											<Heading size='xs' textTransform='uppercase'>
-												{material.value?.value?.name}
-											</Heading>
-										</Box>
-									})
-								}
+                        <CardBody>
+                            <Stack divider={<StackDivider/>} spacing='4' height={190} width={400} overflow={'auto'}>
+                                {
+                                    hasLoadingContractor ? <Spinner
+                                        thickness='4px'
+                                        speed='0.65s'
+                                        emptyColor='gray.200'
+                                        color='blue.500'
+                                        size='xl'
+                                    /> : null
+                                }
+                                {
+                                    contractorListLink.map((material, index) => {
+                                        return <Box key={index}>
+                                            <Heading size='xs' textTransform='uppercase'>
+                                                {material.value?.value?.name}
+                                            </Heading>
+                                        </Box>
+                                    })
+                                }
 
-							</Stack>
-						</CardBody>
-					</Card>
-				</Box>
-
-
-				<Box>
-					<Card mt={10}>
-						<CardHeader>
-							<Flex align={"center"}>
-								<Heading size='md' mr={4}>Зависимые процессы</Heading>
-							</Flex>
-
-						</CardHeader>
-
-						<CardBody >
-							<Stack divider={<StackDivider />} spacing='4'>
-								<Box >
-									<Heading size='xs' textTransform='uppercase' mb={4}>
-										Процессы, необходимые <br />до начала текущего процесса
-									</Heading>
-									<Menu>
-										<MenuButton as={Button} rightIcon={<ChevronDownIcon />} width={'100%'}>
-											Процессы
-										</MenuButton>
-										<MenuList>
-											<CheckboxGroup value={valueCheckboxOldProcess} onChange={(e) => setValueCheckboxOldProcess(e)}>
-												{
-													processListLink.map((process, index) => {
-														return <Box key={process.id} p={2}>
-															<Checkbox value={`${process.id}`}>{process?.value?.value?.name}</Checkbox>
-														</Box>
-													})
-												}
-											</CheckboxGroup>
-
-										</MenuList>
-									</Menu>
-								</Box>
-
-								<Box mt={10}>
-									<Heading size='xs' textTransform='uppercase' mb={4}>
-										Процессы, начнутся <br />после текущего процесса
-									</Heading>
-									<Menu>
-										<MenuButton as={Button} rightIcon={<ChevronDownIcon />} width={'100%'}>
-											Процессы
-										</MenuButton>
-										<MenuList>
-											<CheckboxGroup value={valueCheckboxNextProcess} onChange={(e) => setValueCheckboxNextProcess(e)}>
-												{
-													processListLink.map((process, index) => {
-														return <Box key={process.id} p={2}>
-															<Checkbox value={`${process.id}`}>{process?.value?.value?.name}</Checkbox>
-														</Box>
-													})
-												}
-											</CheckboxGroup>
-
-										</MenuList>
-									</Menu>
-								</Box>
-
-							</Stack>
-						</CardBody>
-					</Card>
-				</Box>
+                            </Stack>
+                        </CardBody>
+                    </Card>
+                </Box>
 
 
-				<Box>
-					<Card mt={10} width={300}>
-						<CardHeader>
-							<Flex align={"center"}>
-								<Heading size='md' mr={4}>Документы</Heading>
-								<Button ml="auto"><AddIcon /></Button>
-							</Flex>
+                <Box>
+                    <Card mt={6} mb={6} padding={6}>
+                        <CardHeader>
+                            <Flex align={"center"}>
+                                <Heading size='md' mr={2}>Зависимые процессы</Heading>
+                            </Flex>
+                        </CardHeader>
 
-						</CardHeader>
+                        <CardBody width={800} textAlign={'center'}>
+                            <Stack divider={<StackDivider/>} spacing='4'>
+                                <Box>
+                                    <Heading size='xs' textTransform='uppercase' mb={4}>
+                                        Процессы, необходимые <br/>до начала текущего процесса
+                                    </Heading>
+                                    <Menu>
+                                        <MenuButton as={Button} rightIcon={<ChevronDownIcon/>} width={'100%'}>
+                                            Процессы
+                                        </MenuButton>
+                                        <MenuList width={760}>
+                                            <CheckboxGroup value={valueCheckboxOldProcess}
+                                                           onChange={(e) => setValueCheckboxOldProcess(e)}>
+                                                {
+                                                    processListLink.map((process, index) => {
+                                                        return <Box key={process.id} p={2}>
+                                                            <Checkbox
+                                                                value={`${process.id}`}>{process?.value?.value?.name}</Checkbox>
+                                                        </Box>
+                                                    })
+                                                }
+                                            </CheckboxGroup>
+                                        </MenuList>
+                                    </Menu>
+                                </Box>
 
-						<CardBody >
-							<Stack divider={<StackDivider />} spacing='4' height={200} overflow={'auto'}>
+                                <Box mt={10}>
+                                    <Heading size='xs' textTransform='uppercase' mb={4}>
+                                        Процессы, начнутся <br/>после текущего процесса
+                                    </Heading>
+                                    <Menu>
+                                        <MenuButton as={Button} rightIcon={<ChevronDownIcon/>} width={'100%'}>
+                                            Процессы
+                                        </MenuButton>
+                                        <MenuList width={760}>
+                                            <CheckboxGroup value={valueCheckboxNextProcess}
+                                                           onChange={(e) => setValueCheckboxNextProcess(e)}>
+                                                {
+                                                    processListLink.map((process, index) => {
+                                                        return <Box key={process.id} p={2}>
+                                                            <Checkbox
+                                                                value={`${process.id}`}>{process?.value?.value?.name}</Checkbox>
+                                                        </Box>
+                                                    })
+                                                }
+                                            </CheckboxGroup>
+                                        </MenuList>
+                                    </Menu>
+                                </Box>
+
+                            </Stack>
+                        </CardBody>
+                    </Card>
+                </Box>
 
 
-							</Stack>
-						</CardBody>
-					</Card>
+                <Box>
+                    <Card mt={6} width={400} height={650}>
+                        <CardHeader>
+                            <Flex align={"center"}>
+                                <Heading size='md' mr={4}>Документы</Heading>
+                                <Button ml="auto"><AddIcon/></Button>
+                            </Flex>
 
-				</Box>
-			</Flex>
-			<Flex>
-				<Button size={'lg'} ml={"auto"} colorScheme='green' onClick={createProcess}>
-					Сохранить
-				</Button>
-			</Flex>
-			{/* Material */}
-			<Modal isOpen={isOpenMaterial} onClose={onCloseModalMaterial}>
-				<ModalOverlay />
-				<ModalContent>
-					<ModalHeader>Добавление материала</ModalHeader>
-					<ModalCloseButton />
-					<ModalBody>
-						<Input placeholder='Название материала' size='md' value={materialName} onChange={(e) => setMaterialName(e.target.value)} />
-					</ModalBody>
-					<ModalBody>
-						<NumberInput placeholder='Количество материала' value={materialCount} onChange={(e) => setMaterialCount(+e)}>
-							<NumberInputField />
-							<NumberInputStepper>
-								<NumberIncrementStepper />
-								<NumberDecrementStepper />
-							</NumberInputStepper>
-						</NumberInput>
-					</ModalBody>
+                        </CardHeader>
 
-					<ModalFooter>
-						<Button colorScheme='green' mr={3} onClick={onCreateMaterial}>
-							Добавить
-						</Button>
-					</ModalFooter>
-				</ModalContent>
-			</Modal>
+                        <CardBody>
+                            <Stack divider={<StackDivider/>} spacing='4' height={200} overflow={'auto'}>
+                            </Stack>
+                        </CardBody>
+                    </Card>
 
-			{/* Contractor */}
-			<Modal isOpen={isOpenContractor} onClose={onCloseModalContractor}>
-				<ModalOverlay />
-				<ModalContent>
-					<ModalHeader>Добавление подрядчика</ModalHeader>
-					<ModalCloseButton />
-					<ModalBody>
-						<Input placeholder='Название подрядчика' size='md' value={contractorName} onChange={(e) => setContractorName(e.target.value)} />
-					</ModalBody>
+                </Box>
+            </Flex>
+            {/* Material */}
+            <Modal isOpen={isOpenMaterial} onClose={onCloseModalMaterial}>
+                <ModalOverlay/>
+                <ModalContent>
+                    <ModalHeader>Добавление материала</ModalHeader>
+                    <ModalCloseButton/>
+                    <ModalBody>
+                        <Input placeholder='Название материала' size='md' value={materialName}
+                               onChange={(e) => setMaterialName(e.target.value)}/>
+                    </ModalBody>
+                    <ModalBody>
+                        <NumberInput placeholder='Количество материала' value={materialCount}
+                                     onChange={(e) => setMaterialCount(+e)}>
+                            <NumberInputField/>
+                            <NumberInputStepper>
+                                <NumberIncrementStepper/>
+                                <NumberDecrementStepper/>
+                            </NumberInputStepper>
+                        </NumberInput>
+                    </ModalBody>
 
-					<ModalFooter>
-						<Button colorScheme='green' mr={3} onClick={onCreateContractor}>
-							Добавить
-						</Button>
-					</ModalFooter>
-				</ModalContent>
-			</Modal>
-		</Box>
-	);
+                    <ModalFooter>
+                        <Button colorScheme='green' mr={3} onClick={onCreateMaterial}>
+                            Добавить
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+            {/* Contractor */}
+            <Modal isOpen={isOpenContractor} onClose={onCloseModalContractor}>
+                <ModalOverlay/>
+                <ModalContent>
+                    <ModalHeader>Добавление подрядчика</ModalHeader>
+                    <ModalCloseButton/>
+                    <ModalBody>
+                        <Input placeholder='Название подрядчика' size='md' value={contractorName}
+                               onChange={(e) => setContractorName(e.target.value)}/>
+                    </ModalBody>
+
+                    <ModalFooter>
+                        <Button colorScheme='green' mr={3} onClick={onCreateContractor}>
+                            Добавить
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </Box>
+    );
 }
 
 export default function CreateProcessPage() {
-	return (
-		<Page>
-			<Content />
-		</Page>
-	);
+    return (
+        <Page>
+            <Content/>
+        </Page>
+    );
 }
 
