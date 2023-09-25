@@ -3,7 +3,7 @@ import React from "react";
 
 const Contractors = () => {
 	return (
-		<Card marginTop={10}>
+		<Card h={"100%"}>
 			<CardHeader>
 				<Heading size='xs'>Информация об объекте</Heading>
 			</CardHeader>

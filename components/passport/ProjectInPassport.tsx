@@ -2,8 +2,8 @@ import {Box, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, T
 
 const ProjectInPassport = () => {
 	return (
-		<Box marginTop={10} >
-			<TableContainer  overflowY="auto" maxHeight="350">
+		<Box>
+			<TableContainer  overflowY="auto">
 				<Table variant='simple'  size='lg' shadow='lg' colorScheme={"blackAlpha"}  bg="gray.100" width="620px" height="351px">
 					<Thead>
 						<Tr>

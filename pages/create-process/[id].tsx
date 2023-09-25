@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Page } from '../components/page';
+import { Page } from '../../components/page';
 import { Box, Button, Flex, Editable, EditablePreview, EditableInput, Select, Card, CardBody, Text, CardHeader, Heading, Stack, StackDivider, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Input, ModalFooter, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Menu, MenuButton, MenuList, MenuItem, Checkbox, Spinner, CheckboxGroup, useCheckboxGroup } from '@chakra-ui/react';
 import { EditIcon, AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { useDeep, useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';

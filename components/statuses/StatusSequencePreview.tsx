@@ -26,7 +26,7 @@ const StatusSequencePreview = (props: StatusSequencePreviewProps) => {
 			</Button>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
-				<ModalContent>
+				<ModalContent maxW={"auto"} w={"fit-content"}>
 					<ModalHeader>{ props.name }</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody>
