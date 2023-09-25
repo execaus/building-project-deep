@@ -3,10 +3,14 @@ import { Page } from '../../components/page';
 import { Box, Button, Flex, Editable, EditablePreview, EditableInput, Select, Card, CardBody, Text, CardHeader, Heading, Stack, StackDivider, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Input, ModalFooter, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Menu, MenuButton, MenuList, MenuItem, Checkbox, Spinner, CheckboxGroup, useCheckboxGroup } from '@chakra-ui/react';
 import { EditIcon, AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { useDeep, useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
+import { useRouter } from 'next/router';
 
 
 function Content() {
-	const deep = useDeep()
+	const deep = useDeep();
+
+	const router = useRouter()
+
 	const [loadingSubTasks, setLoadingSubTasks] = useState(false)
 	const [listSubTasks, setListSubTasks] = useState([])
 	const [statusPipeline, setStatusPipeline] = useState(null)
@@ -183,6 +187,12 @@ function Content() {
 					}
 				}
 			},
+			in: {
+				data: {
+					type_id: 3,
+					from_id: +router.query.id
+				}
+			}
 		})
 	}
 
