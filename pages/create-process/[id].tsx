@@ -140,6 +140,11 @@ function Content() {
 
 	const { data: contractorListLink, loading: hasLoadingContractor } = useDeepSubscription({
 		type_id: contractorTypeLinkId || 0,
+		_not: {
+			in: {
+				type_id: 3
+			}
+		}
 	})
 
 	const { data: processListLink, loading: hasLoadingProcess } = useDeepSubscription({
@@ -173,7 +178,7 @@ function Content() {
 	const createProcess = async () => {
 		await deep.id("@l4legenda/process-pipeline", "Process")
 
-		await deep.insert({
+		const { data: [{id: processId}] } = await deep.insert({
 			type_id: processTypeLinkId,
 			object: {
 				data: {
@@ -192,10 +197,24 @@ function Content() {
 			in: {
 				data: {
 					type_id: 3,
-					from_id: +router.query.id
+					from_id: +router.query.id,
 				}
 			}
 		})
+		for(const material of materaislLink) {
+			await deep.insert({
+				type_id: 3,
+				from_id: processId,
+				to_id: material.id,
+			})
+		}
+		for(const contractor of contractorListLink) {
+			await deep.insert({
+				type_id: 3,
+				from_id: processId,
+				to_id: contractor.id,
+			})
+		}
 		await router.push(`/dashboard/${router.query.id}`)
 	}
 
@@ -210,13 +229,13 @@ function Content() {
 				</Flex>
 				<Box ml={20}>
 					<Flex align={'center'}>Дата начала:
-						<Editable defaultValue='2020-12-12' ml={2} value={dateStart} onInput={(e: any)=>setDateStart(e.target.value)}>
+						<Editable defaultValue='2020-12-12' ml={2} value={dateStart} onInput={(e: any) => setDateStart(e.target.value)}>
 							<EditablePreview />
 							<EditableInput />
 						</Editable>
 					</Flex>
 					<Flex align={'center'}>Дата окончания:
-						<Editable defaultValue='2020-12-12' ml={2} value={dateEnd} onInput={(e: any)=>setDateEnd(e.target.value)}>
+						<Editable defaultValue='2020-12-12' ml={2} value={dateEnd} onInput={(e: any) => setDateEnd(e.target.value)}>
 							<EditablePreview />
 							<EditableInput />
 						</Editable>
@@ -264,12 +283,10 @@ function Content() {
 			</Box>
 			<Flex justify={'space-between'}>
 				<Box>
-
-
 					<Card mt={10}>
 						<CardHeader>
 							<Flex align={"center"}>
-								<Heading size='md' mr={4}>Материалы прооцесса</Heading>
+								<Heading size='md' mr={4}>Материалы</Heading>
 								<Button ml="auto" onClick={onOpenModalMaterial}><AddIcon /></Button>
 							</Flex>
 
