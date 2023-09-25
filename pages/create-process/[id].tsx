@@ -168,7 +168,6 @@ function Content() {
 		})
 		setNameStatus("")
 		setListSubTasks([]);
-		router.push(`dashboard/${router.query.id}`)
 	}
 
 	const createProcess = async () => {
@@ -197,6 +196,7 @@ function Content() {
 				}
 			}
 		})
+		await router.push(`/dashboard/${router.query.id}`)
 	}
 
 	return (
