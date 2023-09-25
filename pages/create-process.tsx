@@ -29,6 +29,11 @@ function Content() {
 
 	const { data: materaislLink, loading: hasLoadingMaterial } = useDeepSubscription({
 		type_id: materialTypeLinkId || 0,
+		_not: {
+			in: {
+				type_id: 3
+			}
+		}
 	})
 
 	const onCloseModalMaterial = () => {
@@ -153,12 +158,12 @@ function Content() {
 		<Box p={10}>
 			<Flex>
 				<Flex align="center">
-					<Editable value={processName} onInput={(e: any) => setProcessName(e.target.value)}>
+					<Editable value={processName} fontSize={20} onInput={(e: any) => setProcessName(e.target.value)}>
 						<EditablePreview />
 						<EditableInput />
 					</Editable>
 				</Flex>
-				<Box ml={10}>
+				<Box ml={20}>
 					<Flex align={'center'}>Дата начала:
 						<Editable defaultValue='2020-12-12' ml={2}>
 							<EditablePreview />
@@ -204,7 +209,7 @@ function Content() {
 					</Menu>
 				</Box>
 			</Flex>
-			<Box>
+			<Box mt={6}>
 				<Box>Выбор цепочки статусов</Box>
 				<Select placeholder='Цепочки статусов' width={300}>
 					{statusPipelineListLink.map((status, index) => {
@@ -264,7 +269,7 @@ function Content() {
 
 						<CardBody >
 							<Stack divider={<StackDivider />} spacing='4' height={200} overflow={'auto'}>
-							{
+								{
 									hasLoadingContractor ? <Spinner
 										thickness='4px'
 										speed='0.65s'
@@ -279,6 +284,44 @@ function Content() {
 											<Heading size='xs' textTransform='uppercase'>
 												{material.value?.value?.name}
 											</Heading>
+										</Box>
+									})
+								}
+
+							</Stack>
+						</CardBody>
+					</Card>
+				</Box>
+				<Box>
+					<Card mt={10}>
+						<CardHeader>
+							<Flex align={"center"}>
+								<Heading size='md' mr={4}>Зависимые процессы</Heading>
+								<Button ml="auto" onClick={onOpenModalMaterial}><AddIcon /></Button>
+							</Flex>
+
+						</CardHeader>
+
+						<CardBody >
+							<Stack divider={<StackDivider />} spacing='4' height={200} overflow={'auto'}>
+								{
+									hasLoadingMaterial ? <Spinner
+										thickness='4px'
+										speed='0.65s'
+										emptyColor='gray.200'
+										color='blue.500'
+										size='xl'
+									/> : null
+								}
+								{
+									materaislLink.map((material, index) => {
+										return <Box key={index}>
+											<Heading size='xs' textTransform='uppercase'>
+												{material.value?.value?.name}
+											</Heading>
+											<Text pt='2' fontSize='sm'>
+												Количество: {material.value?.value?.count}
+											</Text>
 										</Box>
 									})
 								}
