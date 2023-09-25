@@ -14,6 +14,8 @@ function Content() {
 	const [loadingSubTasks, setLoadingSubTasks] = useState(false)
 	const [listSubTasks, setListSubTasks] = useState([])
 	const [statusPipeline, setStatusPipeline] = useState(null)
+	const [dateStart, setDateStart] = useState("2020-12-12")
+	const [dateEnd, setDateEnd] = useState("2020-12-12")
 
 	const { value: valueCheckboxOldProcess, setValue: setValueCheckboxOldProcess } = useCheckboxGroup()
 	const { value: valueCheckboxNextProcess, setValue: setValueCheckboxNextProcess } = useCheckboxGroup()
@@ -178,8 +180,8 @@ function Content() {
 				data: {
 					value: {
 						name: processName,
-						date_start: "2020-12-12",
-						date_end: "2020-12-12",
+						date_start: dateStart,
+						date_end: dateEnd,
 						status_pipeline_id: +statusPipeline,
 						material_id: materaislLink.map((material, index) => material.id),
 						contractor_id: contractorListLink.map((contractor, index) => contractor.id),
@@ -208,13 +210,13 @@ function Content() {
 				</Flex>
 				<Box ml={20}>
 					<Flex align={'center'}>Дата начала:
-						<Editable defaultValue='2020-12-12' ml={2}>
+						<Editable defaultValue='2020-12-12' ml={2} value={dateStart} onInput={(e: any)=>setDateStart(e.target.value)}>
 							<EditablePreview />
 							<EditableInput />
 						</Editable>
 					</Flex>
 					<Flex align={'center'}>Дата окончания:
-						<Editable defaultValue='2020-12-12' ml={2}>
+						<Editable defaultValue='2020-12-12' ml={2} value={dateEnd} onInput={(e: any)=>setDateEnd(e.target.value)}>
 							<EditablePreview />
 							<EditableInput />
 						</Editable>
