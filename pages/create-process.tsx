@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Page } from '../components/page';
-import { Box, Button, Flex, Editable, EditablePreview, EditableInput, Select, Card, CardBody, Text, CardHeader, Heading, Stack, StackDivider, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Input, ModalFooter, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Menu, MenuButton, MenuList, MenuItem, Checkbox, Spinner } from '@chakra-ui/react';
+import { Box, Button, Flex, Editable, EditablePreview, EditableInput, Select, Card, CardBody, Text, CardHeader, Heading, Stack, StackDivider, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Input, ModalFooter, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Menu, MenuButton, MenuList, MenuItem, Checkbox, Spinner, CheckboxGroup, useCheckboxGroup } from '@chakra-ui/react';
 import { EditIcon, AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { useDeep, useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
 
@@ -9,6 +9,10 @@ function Content() {
 	const deep = useDeep()
 	const [loadingSubTasks, setLoadingSubTasks] = useState(false)
 	const [listSubTasks, setListSubTasks] = useState([])
+	const [statusPipeline, setStatusPipeline] = useState(null)
+
+	const { value: valueCheckboxOldProcess, setValue: setValueCheckboxOldProcess } = useCheckboxGroup()
+	const { value: valueCheckboxNextProcess, setValue: setValueCheckboxNextProcess } = useCheckboxGroup()
 
 	const [nameStatus, setNameStatus] = useState("");
 
@@ -16,6 +20,8 @@ function Content() {
 	const { data: statusPipelineTypeLinkId } = useDeepId("@l4legenda/status-pipeline", "StatusPipeline");
 	const { data: materialTypeLinkId } = useDeepId("@l4legenda/material-pipeline", "Material");
 	const { data: contractorTypeLinkId } = useDeepId("@l4legenda/contractor-pipeline", "Contractor");
+	const { data: processTypeLinkId } = useDeepId("@l4legenda/process-pipeline", "Process");
+	const { data: documentTypeLinkId } = useDeepId("@l4legenda/document-pipeline", "Document");
 
 	const [processName, setProcessName] = useState("Название процесса");
 
@@ -130,6 +136,10 @@ function Content() {
 		type_id: contractorTypeLinkId || 0,
 	})
 
+	const { data: processListLink, loading: hasLoadingProcess } = useDeepSubscription({
+		type_id: processTypeLinkId || 0,
+	})
+
 	const createStatusPipeline = async () => {
 		const statusPipelineTypeLinkId = await deep.id('@l4legenda/status-pipeline', 'StatusPipeline')
 
@@ -152,6 +162,28 @@ function Content() {
 		})
 		setNameStatus("")
 		setListSubTasks([]);
+	}
+
+	const createProcess = async () => {
+		await deep.id("@l4legenda/process-pipeline", "Process")
+
+		await deep.insert({
+			type_id: processTypeLinkId,
+			object: {
+				data: {
+					value: {
+						name: processName,
+						date_start: "2020-12-12",
+						date_end: "2020-12-12",
+						status_pipeline_id: +statusPipeline,
+						material_id: materaislLink.map((material, index) => material.id),
+						contractor_id: contractorListLink.map((contractor, index) => contractor.id),
+						old_process_id: valueCheckboxOldProcess,
+						next_process_id: valueCheckboxNextProcess,
+					}
+				}
+			},
+		})
 	}
 
 	return (
@@ -211,13 +243,13 @@ function Content() {
 			</Flex>
 			<Box mt={6}>
 				<Box>Выбор цепочки статусов</Box>
-				<Select placeholder='Цепочки статусов' width={300}>
+				<Select placeholder='Цепочки статусов' width={300} onChange={(e) => setStatusPipeline(e.target.value)}>
 					{statusPipelineListLink.map((status, index) => {
 						return <option key={index} value={status.id}>{status.value?.value?.name}</option>
 					})}
 				</Select>
 			</Box>
-			<Flex>
+			<Flex justify={'space-between'}>
 				<Box>
 
 
@@ -292,46 +324,96 @@ function Content() {
 						</CardBody>
 					</Card>
 				</Box>
+
+
 				<Box>
 					<Card mt={10}>
 						<CardHeader>
 							<Flex align={"center"}>
 								<Heading size='md' mr={4}>Зависимые процессы</Heading>
-								<Button ml="auto" onClick={onOpenModalMaterial}><AddIcon /></Button>
+							</Flex>
+
+						</CardHeader>
+
+						<CardBody >
+							<Stack divider={<StackDivider />} spacing='4'>
+								<Box >
+									<Heading size='xs' textTransform='uppercase' mb={4}>
+										Процессы, необходимые <br />до начала текущего процесса
+									</Heading>
+									<Menu>
+										<MenuButton as={Button} rightIcon={<ChevronDownIcon />} width={'100%'}>
+											Процессы
+										</MenuButton>
+										<MenuList>
+											<CheckboxGroup value={valueCheckboxOldProcess} onChange={(e) => setValueCheckboxOldProcess(e)}>
+												{
+													processListLink.map((process, index) => {
+														return <Box key={process.id} p={2}>
+															<Checkbox value={`${process.id}`}>{process?.value?.value?.name}</Checkbox>
+														</Box>
+													})
+												}
+											</CheckboxGroup>
+
+										</MenuList>
+									</Menu>
+								</Box>
+
+								<Box mt={10}>
+									<Heading size='xs' textTransform='uppercase' mb={4}>
+										Процессы, начнутся <br />после текущего процесса
+									</Heading>
+									<Menu>
+										<MenuButton as={Button} rightIcon={<ChevronDownIcon />} width={'100%'}>
+											Процессы
+										</MenuButton>
+										<MenuList>
+											<CheckboxGroup value={valueCheckboxNextProcess} onChange={(e) => setValueCheckboxNextProcess(e)}>
+												{
+													processListLink.map((process, index) => {
+														return <Box key={process.id} p={2}>
+															<Checkbox value={`${process.id}`}>{process?.value?.value?.name}</Checkbox>
+														</Box>
+													})
+												}
+											</CheckboxGroup>
+
+										</MenuList>
+									</Menu>
+								</Box>
+
+							</Stack>
+						</CardBody>
+					</Card>
+				</Box>
+
+
+				<Box>
+					<Card mt={10} width={300}>
+						<CardHeader>
+							<Flex align={"center"}>
+								<Heading size='md' mr={4}>Документы</Heading>
+								<Button ml="auto"><AddIcon /></Button>
 							</Flex>
 
 						</CardHeader>
 
 						<CardBody >
 							<Stack divider={<StackDivider />} spacing='4' height={200} overflow={'auto'}>
-								{
-									hasLoadingMaterial ? <Spinner
-										thickness='4px'
-										speed='0.65s'
-										emptyColor='gray.200'
-										color='blue.500'
-										size='xl'
-									/> : null
-								}
-								{
-									materaislLink.map((material, index) => {
-										return <Box key={index}>
-											<Heading size='xs' textTransform='uppercase'>
-												{material.value?.value?.name}
-											</Heading>
-											<Text pt='2' fontSize='sm'>
-												Количество: {material.value?.value?.count}
-											</Text>
-										</Box>
-									})
-								}
+
 
 							</Stack>
 						</CardBody>
 					</Card>
+
 				</Box>
 			</Flex>
-
+			<Flex>
+				<Button size={'lg'} ml={"auto"} colorScheme='green' onClick={createProcess}>
+					Сохранить
+				</Button>
+			</Flex>
 			{/* Material */}
 			<Modal isOpen={isOpenMaterial} onClose={onCloseModalMaterial}>
 				<ModalOverlay />
