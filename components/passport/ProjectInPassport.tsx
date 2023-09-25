@@ -1,35 +1,39 @@
-import {Box, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
+import { Box, Card, CardBody, CardHeader, Heading, Stack, StackDivider } from '@chakra-ui/react';
+import { useDeepId, useDeepSubscription } from '@deep-foundation/deeplinks/imports/client';
+import { Text } from '@chakra-ui/react';
+import React from 'react';
 
 const ProjectInPassport = () => {
+	const { data: processTypeLinkId } = useDeepId("@l4legenda/process-pipeline", "Process");
+
+	const { data: processListLink, loading: hasLoadingProcess } = useDeepSubscription({
+		type_id: processTypeLinkId || 0,
+	})
+
+	const onProcessClick = () => {
+
+	};
+
 	return (
-		<Box marginTop={10} >
-			<TableContainer  overflowY="auto" maxHeight="350">
-				<Table variant='simple'  size='lg' shadow='lg' colorScheme={"blackAlpha"}  bg="gray.100" width="620px" height="351px">
-					<Thead>
-						<Tr>
-							<Th fontSize="lg" color="gray.800">Выполняемые процессы</Th>
-						</Tr>
-					</Thead>
-					<Tbody>
-						<Tr>
-							<Td>Укладка пола</Td>
-						</Tr>
-						<Tr>
-							<Td>Настраивание падингов</Td>
-						</Tr>
-						<Tr>
-							<Td>Ровняем личико</Td>
-						</Tr>
-						<Tr>
-							<Td>Ровняем личико</Td>
-						</Tr>
-						<Tr>
-							<Td>Ровняем личико</Td>
-						</Tr>
-					</Tbody>
-				</Table>
-			</TableContainer>
-		</Box>
+		<Card h={"100%"}>
+			<CardHeader>
+				<Heading size='xs'>Выполняемые процессы</Heading>
+			</CardHeader>
+			<CardBody>
+				<Stack divider={<StackDivider />} spacing='4' overflowY="auto" h={370}>
+					{
+						processListLink.map(process => <Box key={process?.id} onClick={onProcessClick}>
+							<Text fontSize='lg' >
+								{ process?.value?.value?.name }
+							</Text>
+							<Text fontSize='sm'>
+								{ `c ${process?.value?.value?.date_start} по ${process?.value?.value?.date_end}` }
+							</Text>
+						</Box>)
+					}
+				</Stack>
+			</CardBody>
+		</Card>
 	);
 }
 export default ProjectInPassport;

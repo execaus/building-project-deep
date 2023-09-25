@@ -2,7 +2,7 @@ import React from 'react';
 import { Page } from '../../components/page';
 import Passport from "../../components/passport/Passport";
 import { NavBar } from '../../components/navbar';
-import { HStack } from '@chakra-ui/react';
+import { Box, HStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 function Content() {
@@ -11,7 +11,9 @@ function Content() {
 
 	return (
 		<HStack>
-			<NavBar projectID={id as string}/>
+			<Box marginBottom={"auto"}>
+				<NavBar projectID={id as string}/>
+			</Box>
 			<Passport projectID={id as string}/>
 		</HStack>
 	);
