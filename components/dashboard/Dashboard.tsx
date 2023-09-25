@@ -1,10 +1,24 @@
-import {Card, Grid, GridItem, List, ListIcon, ListItem, VStack} from "@chakra-ui/react";
-import {Circle} from "@mui/icons-material";
-import {Gantt} from "gantt-task-react";
+import { Card, Grid, GridItem, List, ListIcon, ListItem, Spinner, VStack } from "@chakra-ui/react";
+import { Circle } from "@mui/icons-material";
+import { Gantt } from "gantt-task-react";
 import React from "react";
-import {tasks} from "./GanttTasks";
+import { tasks } from "./GanttTasks";
+import { useDeep, useDeepId, useDeepSubscription } from "@deep-foundation/deeplinks/imports/client";
+import { useRouter } from "next/router";
 
 const Dashboard = () => {
+    const deep = useDeep();
+    const router = useRouter();
+    const { id } = router.query;
+    const { data: processTypeLinkId } = useDeepId("@l4legenda/process-pipeline", "Process");
+    const { data: processLinks, loading: hasLoadingProcess } = useDeepSubscription({
+        type_id: processTypeLinkId || 0,
+        in: {
+            type_id: 3,
+            from_id: +id
+        }
+    });
+
     return (
         <Grid
             h={'100vh'}
@@ -16,23 +30,28 @@ const Dashboard = () => {
             marginLeft={-10}
         >
             <GridItem area={"nav"}
-                      maxWidth={'100%'}>
+                maxWidth={'100%'}>
                 <Card p={3}
                 >
                     <VStack>
                         <List spacing={3}>
-                            <ListItem>
-                                <ListIcon as={Circle} color='red.500'/>
-                                Заливка фундамента
-                            </ListItem>
-                            <ListItem>
-                                <ListIcon as={Circle} color='blue.500'/>
-                                Установка свай
-                            </ListItem>
-                            <ListItem>
-                                <ListIcon as={Circle} color='purple.500'/>
-                                Очистка строй площадки
-                            </ListItem>
+                            {
+                                hasLoadingProcess ? <Spinner
+                                    thickness='4px'
+                                    speed='0.65s'
+                                    emptyColor='gray.200'
+                                    color='blue.500'
+                                    size='sm'
+                                /> : null
+                            }
+                            {
+                                processLinks.map((process, index) => {
+                                    return <ListItem key={index}>
+                                        <ListIcon as={Circle} color='green.500' />
+                                        Заливка фундамента
+                                    </ListItem>
+                                })
+                            }
                         </List>
                     </VStack>
                 </Card>
