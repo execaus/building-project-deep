@@ -307,6 +307,7 @@ function Content() {
 						</MenuList>
 					</Menu>
 				</Box>
+				<Button colorScheme='green' ml={2} onClick={createProcess}>Сохранить</Button>
 			</Flex>
 			<Box mt={6}>
 				<Box>Выбор цепочки статусов</Box>
