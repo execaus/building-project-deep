@@ -139,7 +139,7 @@ function Content() {
 		setLoadingSubTasks(true);
 		const taskTypeLinkId = await deep.id("@deep-foundation/tasks", "Task");
 		const dependsOnTypeLinkId = await deep.id("@deep-foundation/tasks", "DependsOn");
-		const splitTypeLinkId = await deep.id("@deep-foundation/chatgpt-tasks", "Split");
+		const splitTypeLinkId = await deep.id("@deep-foundation/chatgpt-free-tasks", "Split");
 
 		const { data: [{ id: taskLinkId }] } = await deep.insert({
 			type_id: taskTypeLinkId,
